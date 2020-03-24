@@ -1,6 +1,6 @@
 {
   "name": "rollup-configured",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "rollup config for building modern apps and libraries",
   "author": {
     "name": "Your Name",
@@ -24,7 +24,7 @@
   },
   "files": [
     "babel-config.js",
-   "index.js"
+    "index.js"
   ],
   "keywords": [
     "rollup",
