@@ -68,7 +68,7 @@ module.exports = async (inputOptions, getConfig) => {
         modern = true,
         format = 'es',
         multiBuildApp,
-        appPolyfills,
+        appPolyfills = !!multiBuildApp,
         browserslist = pkg.browserslist,
         cssBrowserslist = browserslist,
     } = PROJECT && inputOptions.project && inputOptions.project[PROJECT] ? {
