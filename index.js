@@ -263,14 +263,14 @@ module.exports = async (inputOptions, getConfig) => {
                     safari10: true
                 }),
 
-                (DEV && !BUILD_APP) && serve({
+                (DEV && !legacy && !BUILD_APP) && serve({
                     historyApiFallback: true,
                     contentBase: output,
                     port: 3000,
                     ...devServer
                 }),
 
-                (DEV && !BUILD_APP) && livereload({
+                (DEV && !legacy && !BUILD_APP) && livereload({
                     watch: output
                 }),
 
