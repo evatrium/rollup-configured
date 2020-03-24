@@ -9,6 +9,7 @@ npm install rollup-configured
 ```
 
 ## Usage
+Create a rollup.config.js file at the root of your project and add the following snippet.
 
 Configuration options are consumed via the package.json scripts, 
 and a "rollupConfig" object located as a property in the package.json or by passing an object directly to the config 
@@ -139,6 +140,11 @@ unless external option is set to "none".
 see rollup docs for more on supported formats
 
 **multiBuild** - pass true to enable. creates an additional conditionally loaded legacy build for browsers using System es module shims.  
+
+**pragma** - (default: 'h') - jsx pragma
+
+**pragmaFrag** (default: 'Fragment') - jsx Fragment pragma
+
 
 ## other included features
 
