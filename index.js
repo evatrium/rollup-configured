@@ -2,42 +2,42 @@
     Builds modern es format libraries and multiBuild apps
  */
 // assets
-import url from '@rollup/plugin-url';
-import {string} from 'rollup-plugin-string';
-import copy from 'rollup-plugin-copy';
+const url = require('@rollup/plugin-url');
+const {string} = require('rollup-plugin-string');
+const copy = require('rollup-plugin-copy');
 
 // js
-import replace from '@rollup/plugin-replace';
-import aliasImports from '@rollup/plugin-alias';
-import nodeResolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import babel from 'rollup-plugin-babel';
-import {terser} from 'rollup-plugin-terser';
-import json from "@rollup/plugin-json";
+const replace = require('@rollup/plugin-replace');
+const aliasImports = require('@rollup/plugin-alias');
+const nodeResolve = require("@rollup/plugin-node-resolve");
+const commonjs = require("@rollup/plugin-commonjs");
+const babel = require('rollup-plugin-babel');
+const {terser} = require('rollup-plugin-terser');
+const json = require("@rollup/plugin-json");
 
 // html
-import indexHTML from 'rollup-plugin-index-html';
+const indexHTML = require('rollup-plugin-index-html');
 
 // css
-import postcss from 'rollup-plugin-postcss';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
+const postcss = require('rollup-plugin-postcss');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
 
 // serve
-import livereload from 'rollup-plugin-livereload'
-import serve from 'rollup-plugin-serve'
+const livereload = require('rollup-plugin-livereload');
+const serve = require('rollup-plugin-serve');
 
 // misc
-import rimraf from 'rimraf';
-import glob from 'tiny-glob/sync'
-import filesize from 'rollup-plugin-filesize';
-import path from "path";
+const rimraf = require('rimraf');
+const glob = require('tiny-glob/sync');
+const filesize = require('rollup-plugin-filesize');
+const path = require("path");
 
 import customBabel from './babel-config';
 
 const clearDir = dir => new Promise(resolve => rimraf(dir, {}, resolve));
 
-export default async (inputOptions, getConfig) => {
+module.exports = async (inputOptions, getConfig) => {
 
     let {env: ENV, project: PROJECT, preset: PRESET, cwd = process.cwd()} = process.env;
 
@@ -275,7 +275,6 @@ export default async (inputOptions, getConfig) => {
                 }),
 
                 (BUILD_APP || LIB) && filesize(),
-
             ).filter(Boolean),
 
             onwarn(message, warn) {
