@@ -33,7 +33,7 @@ const glob = require('tiny-glob/sync');
 const filesize = require('rollup-plugin-filesize');
 const path = require("path");
 
-import customBabel from './babel-config';
+const customBabel = require('./babel-config');
 
 const clearDir = dir => new Promise(resolve => rimraf(dir, {}, resolve));
 
