@@ -18,7 +18,6 @@
   },
   "license": "MIT",
   "main": "index.js",
-  "module": "index.js",
   "publishConfig": {
     "access": "public"
   },
