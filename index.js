@@ -1,5 +1,10 @@
 /*
     Builds modern es format libraries and multiBuild apps
+
+    References / rollup examples
+    https://github.com/developit/microbundle/blob/master/src/index.js
+    https://github.com/open-wc/open-wc/blob/master/packages/building-rollup/modern-and-legacy-config.js
+    https://github.com/preactjs/preact-cli/blob/master/packages/cli/babel/index.js
  */
 // assets
 const url = require('@rollup/plugin-url');
@@ -37,6 +42,7 @@ const customBabel = require('./babel-config');
 
 const clearDir = dir => new Promise(resolve => rimraf(dir, {}, resolve));
 
+
 module.exports = async (inputOptions, getConfig) => {
 
     let {env: ENV, project: PROJECT, preset: PRESET, cwd = process.cwd()} = process.env;
@@ -64,7 +70,7 @@ module.exports = async (inputOptions, getConfig) => {
         devServer,
         external,
         target = 'web',
-        context = 'window',
+        context,
         modern = true,
         format = 'es',
         multiBuildApp,
@@ -75,6 +81,11 @@ module.exports = async (inputOptions, getConfig) => {
         ...inputOptions, ...inputOptions.project[PROJECT]
     } : inputOptions;
 
+    context = target !== 'node' ? 'window' : context;
+
+    modern = format === "es";
+
+    format = modern ? 'es' : format;
 
     let DEV = PRESET === 'dev' || preset === 'dev';
     let LIB = PRESET === 'lib' || preset === 'lib';
@@ -120,12 +131,12 @@ module.exports = async (inputOptions, getConfig) => {
 
     let externals = [];
     if (target !== 'web') externals.concat(['dns', 'fs', 'path', 'url']);
-    if (LIB && external !== 'none') {
+    if (LIB && external !== 'none' || external) {
         externals = externals
             .concat(Object.keys(pkg.peerDependencies || {}))
-            .concat(Object.keys(pkg.dependencies || {}))
-            .concat(external);
+            .concat(Object.keys(pkg.dependencies || {}));
     }
+    if (external) externals.concat(external);
     const externalPredicate = new RegExp(`^(${externals.join('|')})($|/)`);
     const externalTest = externals.length === 0 ? () => false : id => externalPredicate.test(id);
 
@@ -195,7 +206,7 @@ module.exports = async (inputOptions, getConfig) => {
                     indexHTML: html,
                     legacy,
                     multiBuild: multiBuildApp,
-                    ...(appPolyfills ? {
+                    ...(appPolyfills || multiBuildApp ? {
                         polyfills: {
                             dynamicImport: true,
                             coreJs: true,
@@ -259,7 +270,7 @@ module.exports = async (inputOptions, getConfig) => {
                     },
                     ecma: multiBuildApp ? (legacy ? 5 : 9) : (modern ? 9 : 5),
                     warnings: true,
-                    toplevel: true,
+                    toplevel: modern || ['es', 'esm', 'cjs'].includes(format),
                     safari10: true
                 }),
 
