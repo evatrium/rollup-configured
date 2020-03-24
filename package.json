@@ -23,8 +23,8 @@
     "access": "public"
   },
   "files": [
-    "lib",
-    "src"
+    "babel-config.js",
+   "index.js"
   ],
   "keywords": [
     "rollup",
