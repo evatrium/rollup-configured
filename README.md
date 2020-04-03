@@ -5,7 +5,7 @@
 ### Installation
 
 ```sh
-npm install rollup-configured
+npm install rollup-configured --save-dev
 ```
 
 ## Usage
@@ -58,7 +58,7 @@ There are three options to be aware of: **preset**, **project** and **env**
 
 - **build_app** - builds production code from src/ to build
 
-- **lib** - build a production "esm" node_module from src/ to lib/ 
+- **lib** - build a production module from src/ to lib/ 
 
 **project** - pass the property name of which object to select under the "project" property on the "rollupConfig" object 
 that you would like to override the default configuration with.
@@ -125,10 +125,10 @@ each key value under "development" will be made accessible on process.env
 
 **preset** and **env** - may be used in place of script options. Script option will override rollupConfig option.
 
-**external** - external dependencies to exclude from the build. everything is bundled by default for all presets 
-except for preset "lib". You may pass an array of dependencies you'd like to exclude otherwise for any preset. 
-Preset lib will exclude packages listed under peerDependencies and dependencies in the package.json, 
-unless external option is set to "none". 
+**external** - By default, presets "build_app" and "dev" will bundle everything. Preset "lib", however, will exclude all 
+dependencies and peerDependencies listed in the package.json by default. To override the default settings, pass "none" 
+to bundle everything or an array of dependencies to exclude from the bundle. If an array is passed, it will be joined with any 
+peerDependencies as a list to exclude.
 
 **target** - web or node (default:web)
  

@@ -1,3 +1,4 @@
+const r = file => require.resolve(file);
 
 module.exports = function (options = {}) {
 
@@ -35,22 +36,25 @@ module.exports = function (options = {}) {
         ],
 
         "plugins": [
-            ["babel-plugin-jcss", {"browsers": cssBrowserslist}],
-            "babel-plugin-minify-tagged-templates",
-            "@babel/plugin-syntax-dynamic-import",
-            "@babel/plugin-syntax-import-meta",
-            ["babel-plugin-bundled-import-meta", {"importStyle": 'baseUri'}],
-            ["@babel/plugin-proposal-nullish-coalescing-operator", {"loose": true}],
-            ["@babel/plugin-proposal-optional-chaining", {"loose": true}],
-            !modern && ["babel-plugin-transform-async-to-promises", {"inlineHelpers": true, "externalHelpers": true}],
-            ["@babel/plugin-transform-react-jsx", {"pragma": pragma || "h", "pragmaFrag": pragmaFrag || "Fragment"}],
-            isProd && "babel-plugin-transform-react-remove-prop-types",
-            ["@babel/plugin-proposal-class-properties", {"loose": true}],
-            !modern && ["@babel/plugin-transform-regenerator", {async: false}],
-            "babel-plugin-macros"
+            [r("babel-plugin-jcss"), {"browsers": cssBrowserslist}],
+            r("babel-plugin-minify-tagged-templates"),
+            r("@babel/plugin-syntax-dynamic-import"),
+            r("@babel/plugin-syntax-import-meta"),
+            [r("babel-plugin-bundled-import-meta"), {"importStyle": 'baseUri'}],
+            [r("@babel/plugin-proposal-nullish-coalescing-operator"), {"loose": true}],
+            [r("@babel/plugin-proposal-optional-chaining"), {"loose": true}],
+            !modern && [r("babel-plugin-transform-async-to-promises"), {
+                "inlineHelpers": true,
+                "externalHelpers": true
+            }],
+            [r("@babel/plugin-transform-react-jsx"), {"pragma": pragma || "h", "pragmaFrag": pragmaFrag || "Fragment"}],
+            isProd && r("babel-plugin-transform-react-remove-prop-types"),
+            [r("@babel/plugin-proposal-class-properties"), {"loose": true}],
+            !modern && [r("@babel/plugin-transform-regenerator"), {async: false}],
+            r("babel-plugin-macros")
         ].filter(Boolean),
 
-        "generatorOpts" : {
+        "generatorOpts": {
             minified: isProd,
             compact: isProd,
             shouldPrintComment: comment => /[@#]__PURE__/.test(comment),

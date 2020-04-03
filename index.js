@@ -129,14 +129,18 @@ module.exports = async (inputOptions, getConfig) => {
 
     // --------- external -------------
 
-    let externals = [];
-    if (target !== 'web') externals.concat(['dns', 'fs', 'path', 'url']);
-    if (LIB && external !== 'none' || external) {
-        externals = externals
-            .concat(Object.keys(pkg.peerDependencies || {}))
-            .concat(Object.keys(pkg.dependencies || {}));
-    }
-    if (external) externals.concat(external);
+    external = external || ((BUILD_APP || DEV) ? "none" : external);
+    let externals = [],
+        peerDeps = Object.keys(pkg.peerDependencies || {}),
+        deps = Object.keys(pkg.dependencies || {});
+
+    if (target !== 'web') externals = ['dns', 'fs', 'path', 'url'];
+
+    if (external === 'none') {
+        // bundle everything
+    } else if (external) externals = externals.concat(external).concat(peerDeps);
+    else externals = externals.concat(deps).concat(peerDeps);
+
     const externalPredicate = new RegExp(`^(${externals.join('|')})($|/)`);
     const externalTest = externals.length === 0 ? () => false : id => externalPredicate.test(id);
 
@@ -199,7 +203,7 @@ module.exports = async (inputOptions, getConfig) => {
                             ...(cssBrowserslist ? {ovverideBrowserslist: cssBrowserslist} : {})
                         }),
                         cssnano({preset: 'default'}),
-                    ],
+                    ]
                 }),
 
                 (!LIB) && html && indexHTML({
@@ -286,6 +290,7 @@ module.exports = async (inputOptions, getConfig) => {
                 }),
 
                 (BUILD_APP || LIB) && filesize(),
+
             ).filter(Boolean),
 
             onwarn(message, warn) {
