@@ -7,6 +7,8 @@
 ```sh
 npm install rollup-configured --save-dev
 ```
+Alternatively use [create-scaffold](https://github.com/iosio/create-scaffold) to create a directory structure for you 
+and see how rollup-configured works in action.
 
 ## Usage
 Create a rollup.config.js file at the root of your project and add the following snippet.
