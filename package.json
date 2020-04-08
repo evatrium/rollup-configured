@@ -1,6 +1,6 @@
 {
   "name": "rollup-configured",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "rollup config for building modern apps and libraries",
   "repository": {
     "type": "git",
