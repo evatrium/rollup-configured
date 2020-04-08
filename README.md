@@ -77,6 +77,7 @@ example:
             "input": "demo/src/index.js"
         }
     },
+    // when running the "start" command above, the value of project.demo.input will override this value
     "input": "src/index.js",
     // all other options still apply
 },
